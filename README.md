@@ -33,7 +33,7 @@ In GitHub, go to the **Actions** tab and click **"I understand my workflows, go 
 
 ### 4. Run it
 
-The bot runs automatically every hour during market hours. To trigger a manual run go to **Actions → Hourly Trader → Run workflow**.
+The bot runs automatically every hour during market hours. To trigger a manual run go to **Actions → Trader → Run workflow**.
 
 ## Customization
 
