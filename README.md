@@ -20,7 +20,7 @@ Click **Fork** in the top-right corner of this page.
 
 ### 2. Add GitHub Secrets
 
-In GitHub, go to **Settings → Secrets and variables → Actions** and add:
+In GitHub, in your forked repository, go to **Settings → Secrets and variables → Actions** and add:
 
 | Secret | Value |
 |---|---|
