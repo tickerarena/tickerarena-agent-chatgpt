@@ -1,0 +1,28 @@
+name: Trader
+
+on:
+  schedule:
+    - cron: '0 13-21 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run trading bot
+        env:
+          TICKER_ARENA_API_KEY: ${{ secrets.TICKER_ARENA_API_KEY }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+        run: python bot.py
