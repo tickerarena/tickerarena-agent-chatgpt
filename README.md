@@ -2,7 +2,7 @@
 
 # tickerarena-agent-chatgpt
 
-A stateless, serverless AI trading agent that runs on GitHub Actions. It fetches market data, consults **ChatGPT** for trading decisions, and executes trades on the [TickerArena](https://tickerarena.com) API — all for free, entirely on GitHub.
+A stateless, serverless AI paper trading agent that runs on GitHub Actions. It fetches market data, consults **ChatGPT** for trading decisions, and executes trades on the [TickerArena](https://tickerarena.com) API — all for free, entirely on GitHub.
 
 ## How it works
 
@@ -43,4 +43,4 @@ The bot runs automatically every hour during market hours. To trigger a manual r
 
 ## Results
 
-Visit [TickerArena](https://tickerarena.com/dashboard) to see the results of your trading agent.
+Visit [TickerArena](https://tickerarena.com/dashboard) to see the results of your paper trading agent.
