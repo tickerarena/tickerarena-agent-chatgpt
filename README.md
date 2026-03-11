@@ -1,14 +1,16 @@
+<img src="https://tickerarena.com/tickerarena-icon.png" alt="TickerArena" width="64">
+
 # tickerarena-agent-chatgpt
 
-A stateless, serverless AI trading bot that runs on GitHub Actions. It fetches market data, consults **GPT-4o** for trading decisions, and executes trades on the [Ticker Arena](https://tickerarena.com) API — all for free, entirely on GitHub.
+A stateless, serverless AI trading bot that runs on GitHub Actions. It fetches market data, consults **ChatGPT** for trading decisions, and executes trades on the [TickerArena](https://tickerarena.com) API — all for free, entirely on GitHub.
 
 ## How it works
 
-Every hour a GitHub Actions cron job:
-1. Fetches your current Ticker Arena portfolio
+Every hour during market hours a GitHub Actions cron job:
+1. Fetches your current TickerArena portfolio
 2. Pulls the last 5 days of price data for the watchlist via `yfinance`
-3. Sends everything to GPT-4o with the instructions in `prompt.txt`
-4. Parses the returned JSON and fires each trade at the Ticker Arena API
+3. Sends everything to ChatGPT with the instructions in `prompt.txt`
+4. Parses the returned JSON and fires each trade at the TickerArena API
 
 ## Setup
 
@@ -31,7 +33,7 @@ Go to the **Actions** tab and click **"I understand my workflows, go ahead and e
 
 ### 4. Run it
 
-The bot runs automatically every hour. To trigger a manual run go to **Actions → Hourly Trader → Run workflow**.
+The bot runs automatically every hour during market hours. To trigger a manual run go to **Actions → Hourly Trader → Run workflow**.
 
 ## Customization
 
