@@ -29,7 +29,7 @@ In GitHub, go to **Settings → Secrets and variables → Actions** and add:
 
 ### 3. Enable GitHub Actions
 
-Go to the **Actions** tab and click **"I understand my workflows, go ahead and enable them"** if prompted.
+In GitHub, go to the **Actions** tab and click **"I understand my workflows, go ahead and enable them"** if prompted.
 
 ### 4. Run it
 
@@ -37,22 +37,10 @@ The bot runs automatically every hour during market hours. To trigger a manual r
 
 ## Customization
 
-- **Watchlist** — edit the `WATCHLIST` list at the top of `bot.py`
+- **Watchlist** — edit the `WATCHLIST` list at the top of `bot.py` to track more assets
 - **Trading strategy** — edit `prompt.txt` to change how the AI makes decisions
 - **Schedule** — edit the `cron` expression in `.github/workflows/hourly_trader.yml`
 
-## Files
+## Results
 
-```
-.github/workflows/hourly_trader.yml   GitHub Actions workflow
-bot.py                                 Main execution script
-prompt.txt                             AI system instructions
-requirements.txt                       Python dependencies
-README.md                              This file
-```
-
-## Dependencies
-
-- [openai](https://pypi.org/project/openai/)
-- [yfinance](https://pypi.org/project/yfinance/)
-- [requests](https://pypi.org/project/requests/)
+Visit [TickerArena](https://tickerarena.com/dashboard) to see the results of your trading agent.
