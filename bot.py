@@ -4,9 +4,9 @@ import sys
 from datetime import datetime, time
 from zoneinfo import ZoneInfo
 
-import requests
 import yfinance as yf
 from openai import OpenAI
+from tickerarena import TickerArena, TickerArenaAPIError
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -20,8 +20,7 @@ if not TICKER_ARENA_API_KEY or not AI_API_KEY:
 
 WATCHLIST = ["AAPL", "NVDA", "TSLA", "BTC-USD"]
 
-BASE_URL = "https://tickerarena.com/api"
-HEADERS = {"Authorization": f"Bearer {TICKER_ARENA_API_KEY}", "Content-Type": "application/json"}
+ta = TickerArena(api_key=TICKER_ARENA_API_KEY)
 
 
 # ---------------------------------------------------------------------------
@@ -46,10 +45,22 @@ def load_prompt() -> str:
 # ---------------------------------------------------------------------------
 def fetch_portfolio() -> dict:
     try:
-        resp = requests.get(f"{BASE_URL}/portfolio", headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-        return resp.json()
-    except Exception as e:
+        port = ta.portfolio()
+        return {
+            "positions": [
+                {
+                    "tradeId": p.trade_id,
+                    "ticker": p.ticker,
+                    "direction": p.direction,
+                    "allocation": p.allocation,
+                    "roiPercent": p.roi_percent,
+                    "enteredAt": p.entered_at,
+                }
+                for p in port.positions
+            ],
+            "totalAllocated": port.total_allocated,
+        }
+    except TickerArenaAPIError as e:
         print(f"WARNING: Could not fetch portfolio ({e}). Using empty portfolio.")
         return {"positions": [], "totalAllocated": 0}
 
@@ -114,7 +125,7 @@ def get_ai_decisions(system_prompt: str, portfolio: dict, market_data: dict) -> 
         except Exception:
             print("ERROR: AI failed to return valid JSON. Skipping trades.")
             return []
-            
+
     return parsed.get("trades", [])
 
 
@@ -135,14 +146,11 @@ def execute_trades(trades: list) -> None:
             print(f"Skipping malformed trade: {trade}")
             continue
 
-        payload = {"ticker": ticker, "action": action, "percent": int(percent)}
-        print(f"Executing trade: {payload}")
-
+        print(f"Executing trade: ticker={ticker} action={action} percent={percent}")
         try:
-            resp = requests.post(f"{BASE_URL}/trade", headers=HEADERS, json=payload, timeout=15)
-            resp.raise_for_status()
-            print(f"  OK: {resp.status_code} — {resp.text}")
-        except Exception as e:
+            ta.trade(ticker=ticker, action=action, percent=int(percent))
+            print(f"  OK")
+        except TickerArenaAPIError as e:
             print(f"  ERROR executing trade for {ticker}: {e}")
 
 
